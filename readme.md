@@ -35,7 +35,7 @@ __Disadvantages__
 
 ### How is React Native Different?
 
-The react ecosystem is described as a learn once write anyone framework.  In other words, code may be slightly different on different platforms (web vs iOS vs android), but the fundamental ways that you build a react app are the same.  And hopefully many components that you create can be shared across the platforms.
+The react ecosystem is described as a learn once write anywhere framework.  In other words, code may be slightly different on different platforms (web vs iOS vs android), but the fundamental ways that you build a react app are the same.  And hopefully many components that you create can be shared across the platforms.
 
 This philosophy is in contrast to other frameworks like [Apache Cordova](https://cordova.apache.org/) that have tried to be a _write_ once and run anywhere framework.
 
@@ -45,7 +45,9 @@ The main difference between the two approaches is that react native apps actuall
 
 Facebook has some [great docs](https://facebook.github.io/react-native/docs/getting-started.html) for how to get started with react native.  Both the iOS setup and the android setup take some time though.
 
-If you want to get started quickly, try [expo](https://docs.expo.io/versions/v15.0.0/introduction/installation.html).  It allows you to write a react native app without having xcode or android studio.  You will need to download their development environment and sign up and also install the expo app on your phone.
+If you want to get started quickly, trye [expo](https://docs.expo.io/versions/v15.0.0/introduction/installation.html).  It allows you to write a react native app without having xcode or android studio.  You will need to download their development environment and sign up and also install the expo app on your phone.
+
+Another way to get started quickly is with [expo sketch] (https://sketch.expo.io/)   This approach is more like a jsbin for react-native code,  and you access your application through a QR code on an Android or ios device after install an app.
 
 
 ### Your First App
