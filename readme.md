@@ -298,7 +298,7 @@ You can check out the [MDN docs](https://developer.mozilla.org/en-US/docs/Web/CS
 React native styling also supports width and height.  As of [February 2017](https://github.com/facebook/react-native/releases/tag/v0.42.0), react native supports percentages for widths and heights!  So you can now do something like this:
 
 ```
-conatinerRow: {
+containerRow: {
     width: '100%',
     height: 100
 }
