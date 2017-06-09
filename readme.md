@@ -9,7 +9,6 @@ A workshop and introduction to react native.
 * Describe what react native is useful for
 * Use flexbox to style a react native app
 * Get data from an api using fetch
-* Intro to navigation using react-navigation
 
 ## React Native: Background
 
@@ -30,7 +29,7 @@ __Advantages__
 
 __Disadvantages__
 
-* Not as performant as native
+* Not as performant as a pure native application.
 * Fast paced community.  Lots of change
 
 ### How is React Native Different?
@@ -45,31 +44,8 @@ The main difference between the two approaches is that react native apps actuall
 
 Facebook has some [great docs](https://facebook.github.io/react-native/docs/getting-started.html) for how to get started with react native.  Both the iOS setup and the android setup take some time though.
 
-If you want to get started quickly, try [expo](https://docs.expo.io/versions/v15.0.0/introduction/installation.html).  It allows you to write a react native app without having xcode or android studio.  You will need to download their development environment and sign up and also install the expo app on your phone.
+If you want to get started quickly, try [expo](https://docs.expo.io/versions/v15.0.0/introduction/installation.html).  It allows you to write a react native app without having xcode or android studio.
 
-
-### Your First App
-
-In your terminal, type:
-
-```
-react-native init MoviesApp
-```
-
-Of if you're using expo, create a new project by clicking the project icon.
-
-The cli will create a directory called MoviesApp. Inside of it, you will get the following files:
-
-* __package.json__: Lists our javascript dependencies.  This is what gets edited when you do `npm install --save <module_name>`
-* __index.ios.js__: The entry point to our ios app.  We can put ios specific setup here.
-* __index.android.js__: The entry point to our android app.  Android specific setup can go here
-* __.babelrc__: The config file for babel (a transpiling library)
-* __.flowconfig__: Flow is a static type checker than you can use in your app.  Find out more from [facebook](https://flowtype.org/)
-* __node_modules__: A directory that contains all of our JS dependencies.
-* __ios__: A directory that contains build settings for iOS. The xcode project will be found here.
-* __android__: A directory that contains build settings for android. The gradle build scrips will be in here.
-
-The expo files will be a little different.  Instead of `index.ios.js` and `index.android.js` you will get a file called `'main.js`
 
 ## Styling
 
@@ -77,14 +53,74 @@ React native has embraced flexbox for its styling needs.  To start on styling, w
 
 ### New Components In React Native
 
-If you are familiar to react in the browser, then you have probably written JSX.  It allows you to write html tags within your JavaScript code.  In react native, however, we are not writing code for the web.  React native will not have access to the `react-dom`.  If you open up `index.ios.js`, you'll notice new imports from `react-native`:
+If you are familiar with react in the browser, then you have probably written JSX.  It allows you to write html tags within your JavaScript code.  In react native, however, we are not writing code for the web.  A JSX component in react for the web might look something like this:
 
-* __AppRegistery__: Used to register the parent component for our app.  We will only need to use this in the entry point for our app.
+```js
+import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
+import './App.css'
+
+export default class App extends Component {
+  render() {
+    return (
+      <div style={styles.container}>
+        <h3>
+          This is a react web app!!
+        <h3>
+      </div>
+    );
+  }
+}
+
+ReactDOM.render(<App />, document.getElementById('root'));
+```
+
+However, react native will not have access to the `react-dom`.  There is no DOM for mobile applications.  Therefore, we have different components that we will use in react native.  Here is an example react native component:
+
+```js
+import React, { Component } from 'react';
+import { Text, View, StyleSheet } from 'react-native';
+import { Constants } from 'expo';
+
+export default class App extends Component {
+  render() {
+    return (
+      <View style={styles.container}>
+        <Text style={styles.paragraph}>
+          Phone connected! Change this code in Replit, press run, and watch it change on your phone.
+        </Text>
+      </View>
+    );
+  }
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingTop: Constants.statusBarHeight,
+    backgroundColor: '#ecf0f1',
+  },
+  paragraph: {
+    margin: 24,
+    fontSize: 18,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    color: '#34495e',
+  },
+});
+```
+
+In the example above, we are creating our own component called `App`.  Every react components always implement the `render` method to tell our application what to render on the screen.
+
+There are 3 important pieces to understand in this example:
+
 * __StyleSheet__: Useful for creating stylesheet objects.  Checks to make sure the values that are being passed are valid react styles.
 * __View__: A container component.  You can think of it as a similar component to an html div
 * __Text__: For showing text. Unlike the browser, our text must always be inside of a text component.
 
-__Notice__: Expo does not have an AppRegistry.  It uses the `Expo` import instead.
+Let's talk about how we can change the styling in react native.
 
 ### React Native Styling
 
@@ -103,14 +139,10 @@ For example, the following (hopefully familiar) styles exist in react native:
 
 To add a style to a component, you can do a few things. Commonly, you'll import `StyleSheet` from `react-native` and use `StyleSheet.create` which accepts an object of styles.  Here is an example that gives text some styling:
 
-```
+```js
 import React, { Component } from 'react';
-import {
-  AppRegistry,
-  StyleSheet,
-  Text,
-  View
-} from 'react-native';
+import { Text, View, StyleSheet } from 'react-native';
+import { Constants } from 'expo';
 
 export default class MovieApp extends Component {
   render() {
@@ -131,21 +163,14 @@ const styles = StyleSheet.create({
     fontSize: 50,
   },
 });
-
-AppRegistry.registerComponent('MovieApp', () => MovieApp);
-
 ```
 
-Notice that the text takes a style prop, that accepts a JavaScript object from `StyleSheet.create`.  We can also just put our styles inline:
+Notice that the text has a style prop, that accepts a JavaScript object from `StyleSheet.create`.  We can also just put our styles inline:
 
-```
+```js
 import React, { Component } from 'react';
-import {
-  AppRegistry,
-  StyleSheet,
-  Text,
-  View
-} from 'react-native';
+import { Text, View, StyleSheet } from 'react-native';
+import { Constants } from 'expo';
 
 export default class MovieApp extends Component {
   render() {
@@ -162,8 +187,6 @@ export default class MovieApp extends Component {
     );
   }
 }
-
-AppRegistry.registerComponent('MovieApp', () => MovieApp);
 ```
 
 We don't need to use `StyleSheet.create in this case because we are providing the style object directly to the Text component.  It is a good idea to use `StyleSheet.create` though because it checks to make sure the styles you provided in your objects are all valid react native styles.
@@ -289,6 +312,12 @@ This property accepts a number and determines the proportion of the available sp
 
 To get more practice with flexbox, try [flexbox froggy](http://flexboxfroggy.com/).  Not all of the styles on the site apply to react native (the reverse options don't exist for example), but much of them apply.
 
+### Exercise
+
+Try to make an application that looks like the following mock up:
+
+![Smile Mockup](./react-native-smile-mock.png)
+
 ### User Input
 
 To allow the user to type something in, we need to use the `TextInput` component.  The facebook docs for `TextInput` are [here](https://facebook.github.io/react-native/docs/textinput.html).
@@ -296,9 +325,10 @@ To allow the user to type something in, we need to use the `TextInput` component
 Here is a simple example:
 
 ```js
-import { AppRegistry, TextInput, Text, View } from 'react-native';
+import React, {Component} from 'react';
+import { Text, TextInput, View, StyleSheet } from 'react-native';
 
-class TextInputExample extends Component {
+export default class TextInputExample extends Component {
   constructor(props) {
     super(props);
     this.state = { text: 'Hello World' };
@@ -306,19 +336,17 @@ class TextInputExample extends Component {
 
   render() {
     return (
-      <View style={{alignItems: 'center', justifyContent: 'space-around'}}>
+      <View style={{flex: 1, alignItems: 'center', justifyContent: 'space-around'}}>
         <TextInput
-          style={{height: 40, borderColor: 'gray', borderWidth: 1}}
-          onChangeText={(text) => this.setState({text})}
-          value={this.state.text}
-        />
+                style={{height: 40, borderColor: 'gray', borderWidth: 1}}
+                onChangeText={(text) => this.setState({text})}
+                value={this.state.text}
+              />
         <Text>text: {this.state.text}</Text>
       </View>
     );
   }
 }
-
-AppRegistry.registerComponent('AwesomeProject', () => TextInputExample);
 ```
 
 Notice that the prop for changing the value of an input is `onChangeText`.  Also, always remember to give your `TextInput` a height or it will not display on iOS.
@@ -335,15 +363,16 @@ import {
   TouchableOpacity,
   Text,
   StyleSheet,
+  View
 } from 'react-native';
 
-export default class CustomButton extends Component {
+class CustomButton extends Component {
   render() {
     return (
       <TouchableOpacity
-        style={styles.buttonContainer}
+        style={buttonStyles.buttonContainer}
         onPress={this.props.onPress}>
-        <Text style={styles.buttonText}>
+        <Text style={buttonStyles.buttonText}>
           {this.props.title}
         </Text>
       </TouchableOpacity>
@@ -351,17 +380,27 @@ export default class CustomButton extends Component {
   }
 }
 
-const styles = StyleSheet.create({
+const buttonStyles = StyleSheet.create({
   buttonContainer: {
     borderRadius: 4,
     backgroundColor: "blue",
-    padding:10 
+    padding:10
   },
   buttonText: {
     color: 'white',
     fontSize: 25
-  } 
+  }
 });
+
+export default class App extends Component {
+  render() {
+    return (
+      <View style={{flex: 1, justifyContent: 'center'}}>
+        <CustomButton title="Hello World" onPress={() => null}/>
+      </View>
+    );
+  }
+}
 ```
 
 ### ScrollView
@@ -379,12 +418,43 @@ To display a list of data, you could use a scroll view.  Scroll Views are simple
 
 To see all the properties that you can set on a scroll view, checkout the [facebook docs](https://facebook.github.io/react-native/docs/scrollview.html)
 
+### Fetch
 
-## Movies Application
+React native developers often use the `fetch` api to make HTTP GET requests.  Typically, we make our get requests inside of a lifecycle method called `componentDidMount`:
+
+```js
+// assume there is some state for our movie data
+componentDidMount() {
+	const title = encodeURIComponent(this.state.title);
+	fetch(`http://netflixroulette.net/api/api.php?title={title}`)
+		.then(d => d.json)
+		.then(d => {
+			this.setState({movie: d});
+		});
+}
+```
 
 
+## Actors in Movies Application
+
+Let's take a look at an example application.  All of the code for the app is located in the [Actors in Movies](https://github.com/rithmschool/React-Native-Actors-In-Movies) repository.
 
 ![](./movie-search.gif)
 
 
+### Directory Structure For a React Native App
 
+To get up and running for our first app, let's use the expo app and [repl.it](https://repl.it/languages/react_native)
+
+The cli will create a directory called MoviesApp. Inside of it, you will get the following files:
+
+* __package.json__: Lists our javascript dependencies.  This is what gets edited when you do `npm install --save <module_name>`
+* __index.ios.js__: The entry point to our ios app.  We can put ios specific setup here.
+* __index.android.js__: The entry point to our android app.  Android specific setup can go here
+* __.babelrc__: The config file for babel (a transpiling library)
+* __.flowconfig__: Flow is a static type checker than you can use in your app.  Find out more from [facebook](https://flowtype.org/)
+* __node_modules__: A directory that contains all of our JS dependencies.
+* __ios__: A directory that contains build settings for iOS. The xcode project will be found here.
+* __android__: A directory that contains build settings for android. The gradle build scrips will be in here.
+
+The expo files will be a little different.  Instead of `index.ios.js` and `index.android.js` you will get a file called `'main.js`
